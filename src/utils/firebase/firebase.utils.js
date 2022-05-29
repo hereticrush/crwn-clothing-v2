@@ -6,6 +6,7 @@ import {
       createUserWithEmailAndPassword,
       signInWithEmailAndPassword,
       signOut,
+      onAuthStateChanged,
        GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -27,9 +28,9 @@ googleProvider.setCustomParameters({
     prompt: "select_account",
 });
 //setting auth, database, google popup signing
-export const auth = getAuth();
+export const auth = getAuth(); //singleton auth object
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
-export const db = getFirestore();
+export const db = getFirestore(); //singleton database object
 
 //creating users in database
 export const createUserDocumentFromAuth = async (userAuth,
@@ -75,4 +76,9 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
 export const signOutUser = async () => {
     return await signOut(auth);
+}
+
+//listen to auth state changes observer pattern
+export const onAuthStateChangedListener = async (callback) => {
+    onAuthStateChanged(auth, callback);
 }
