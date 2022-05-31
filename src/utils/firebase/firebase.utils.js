@@ -1,4 +1,3 @@
-import { async } from '@firebase/util';
 import { initializeApp } from 'firebase/app'; //firebase init
 import { 
     getAuth,
@@ -6,6 +5,7 @@ import {
       createUserWithEmailAndPassword,
       signInWithEmailAndPassword,
       signOut,
+      onIdTokenChanged,
       onAuthStateChanged,
        GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
@@ -81,4 +81,8 @@ export const signOutUser = async () => {
 //listen to auth state changes observer pattern
 export const onAuthStateChangedListener = async (callback) => {
     onAuthStateChanged(auth, callback);
+}
+
+export const onProductStateChangedListener = async (callback) => {
+    onIdTokenChanged(auth, callback);
 }
